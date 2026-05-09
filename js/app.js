@@ -1,5 +1,5 @@
 const SUPABASE_URL = 'https://thdozyoqygxanqmssbcr.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRoZG96eW9xeWd4YW5xbXNzYmNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMjMzNDYsImV4cCI6MjA5Mzg5OTM0Nn0.Fq7DBc3bLAlgNi-b2doKMKzaiqyjROgQSYsHyZRxMis';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRoZG96eW9xeWd4YW5xbXNzYmNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY4MDUyMDIsImV4cCI6MjA2MjM4MTIwMn0.eLynMNLQnSxgp3rNNPbPFuOHCbsLp5OEY0JEL1pkG9o';
 
 const { createClient } = supabase;
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -103,7 +103,7 @@ async function callGroq(msgs) {
   const response = await fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ messages: msgs })
+    body: JSON.stringify({ messages: msgs, plan: userPlan })
   });
   if (!response.ok) throw new Error('API hatasi');
   const data = await response.json();
