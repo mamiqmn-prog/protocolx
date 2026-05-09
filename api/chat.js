@@ -13,10 +13,9 @@ module.exports = async function handler(req, res) {
   if (!GROQ_API_KEY) return res.status(500).json({ error: 'API key eksik' });
 
   const isPro = plan === 'pro';
-  const model = isPro ? 'llama-3.3-70b-versatile' : 'llama-3.1-8b-instant';
   const maxTokens = isPro ? 2048 : 768;
   const systemPrompt = isPro
-    ? "Sen ProtoX'sin. Protocol X yapimcilari tarafindan gelistirildim. Teknoloji, yazilim ve siber guvenlik konularinda uzman bir AI asistansin. YouTube kanalimiz: https://www.youtube.com/@ProtocollX - Pro kullanici icin detayli, kapsamli ve gelismis cevaplar ver. Gerektiginde ornekler ekle. Turkce cevap ver."
+    ? "Sen ProtoX'sin. Protocol X yapimcilari tarafindan gelistirildim. Teknoloji, yazilim ve siber guvenlik konularinda uzman bir AI asistansin. YouTube kanalimiz: https://www.youtube.com/@ProtocollX - Pro kullanici icin detayli ve kapsamli cevaplar ver. Turkce cevap ver."
     : "Sen ProtoX'sin. Protocol X yapimcilari tarafindan gelistirildim. Teknoloji, yazilim ve siber guvenlik konularinda uzman bir AI asistansin. YouTube kanalimiz: https://www.youtube.com/@ProtocollX - Turkce cevap ver. Net ve anlasilir ol.";
 
   const groqMessages = messages.map(m => ({
@@ -32,13 +31,13 @@ module.exports = async function handler(req, res) {
         'Authorization': 'Bearer ' + GROQ_API_KEY
       },
       body: JSON.stringify({
-        model: model,
+        model: 'llama-3.3-70b-versatile',
         messages: [
           { role: 'system', content: systemPrompt },
           ...groqMessages
         ],
         max_tokens: maxTokens,
-        temperature: isPro ? 0.8 : 0.7
+        temperature: 0.7
       })
     });
 
