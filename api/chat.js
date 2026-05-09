@@ -27,7 +27,7 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({
         model: 'llama-3.3-70b-versatile',
         messages: [
-          { role: 'system', content: "Sen ProtocolX'sin. Teknoloji ve yapay zeka konusunda uzman bir AI asistansin. Turkce cevap ver. Kisa, net ve anlasılır ol." },
+          { role: 'system', content: "Sen ProtoX'sin. Protocol X yapimcilari tarafindan gelistirildim. Teknoloji, yazilim ve siber guvenlik konularinda uzman bir AI asistansin. YouTube kanalimiz: https://www.youtube.com/@ProtocollX - Teknoloji ve siber guvenlik icerikleri paylasilıyor. Turkce cevap ver. Kisa, net ve anlasılır ol." },
           ...groqMessages
         ],
         max_tokens: 1024,
