@@ -13,7 +13,7 @@ module.exports = async function handler(req, res) {
   if (!GROQ_API_KEY) return res.status(500).json({ error: 'API key eksik' });
 
   const isPro = plan === 'pro';
-  const model = isPro ? 'llama-3.3-70b-versatile' : 'llama-3.1-8b-instant';
+  const model = isPro ? 'llama-3.3-70b-versatile' : 'gemma2-9b-it';
   const maxTokens = isPro ? 2048 : 512;
   const systemPrompt = isPro
     ? "Sen ProtoX'sin. Protocol X yapimcilari tarafindan gelistirildim. Teknoloji, yazilim ve siber guvenlik konularinda uzman bir AI asistansin. YouTube kanalimiz: https://www.youtube.com/@ProtocollX - Pro kullanici icin detayli, kapsamli ve gelismis cevaplar ver. Turkce cevap ver."
