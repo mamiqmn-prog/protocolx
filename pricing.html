@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProtocolX — Fiyatlandirma</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #020408; --surface: #0a0f1a; --surface2: #0f1824;
+    --border: #1a2840; --accent: #00d4ff; --accent2: #0066ff;
+    --text: #e8f4ff; --muted: #4a6080; --danger: #ff3366; --success: #00ff88;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px; pointer-events: none; z-index: 0;
+  }
+  header {
+    position: relative; z-index: 10; display: flex; align-items: center;
+    justify-content: space-between; padding: 14px 24px;
+    background: rgba(10,15,26,0.9); border-bottom: 1px solid var(--border); backdrop-filter: blur(20px);
+  }
+  .logo {
+    font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 900;
+    letter-spacing: 2px; background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none;
+  }
+  .logo span { -webkit-text-fill-color: var(--danger); }
+  .btn-back {
+    font-size: 0.8rem; color: var(--muted); background: none;
+    border: 1px solid var(--border); border-radius: 6px; padding: 6px 14px;
+    cursor: pointer; text-decoration: none;
+  }
+  .container { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; padding: 60px 24px; text-align: center; }
+  .page-title {
+    font-family: 'Orbitron', monospace; font-size: 1.8rem; font-weight: 900;
+    letter-spacing: 3px; background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 12px;
+  }
+  .page-sub { color: var(--muted); font-size: 1rem; margin-bottom: 48px; }
+  .plans { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 600px) { .plans { grid-template-columns: 1fr; } }
+  .plan-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 32px 24px; text-align: left; position: relative;
+  }
+  .plan-card.pro {
+    border-color: var(--accent);
+    background: linear-gradient(135deg, rgba(0,212,255,0.05), rgba(0,102,255,0.05));
+  }
+  .plan-card.pro::before {
+    content: 'POPULER'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--accent2), var(--accent)); color: #000;
+    font-family: 'Orbitron', monospace; font-size: 0.6rem; font-weight: 700;
+    letter-spacing: 2px; padding: 4px 14px; border-radius: 20px;
+  }
+  .plan-name { font-family: 'Orbitron', monospace; font-size: 1rem; font-weight: 700; letter-spacing: 2px; color: var(--muted); margin-bottom: 16px; }
+  .plan-card.pro .plan-name { color: var(--accent); }
+  .plan-price { font-family: 'Orbitron', monospace; font-size: 2.5rem; font-weight: 900; color: var(--text); margin-bottom: 4px; }
+  .plan-period { color: var(--muted); font-size: 0.85rem; margin-bottom: 24px; }
+  .features { list-style: none; margin-bottom: 28px; display: flex; flex-direction: column; gap: 10px; }
+  .features li { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: var(--text); }
+  .features li::before { content: 'v'; color: var(--success); font-weight: 700; flex-shrink: 0; }
+  .features li.no::before { content: 'x'; color: var(--muted); }
+  .features li.no { color: var(--muted); }
+  .btn-plan { width: 100%; padding: 13px; border-radius: 8px; font-family: 'Orbitron', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; cursor: pointer; }
+  .btn-plan.free { background: none; border: 1px solid var(--border); color: var(--muted); }
+  .btn-plan.pro-btn { background: linear-gradient(135deg, var(--accent2), var(--accent)); border: none; color: #000; }
+  .stripe-note { margin-top: 32px; color: var(--muted); font-size: 0.8rem; }
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html" class="logo">PROTOCOL<span>X</span></a>
+  <a href="index.html" class="btn-back">Geri Don</a>
+</header>
+<div class="container">
+  <div class="page-title">PLANLAR</div>
+  <div class="page-sub">Ihtiyacina uygun plani sec</div>
+  <div class="plans">
+    <div class="plan-card">
+      <div class="plan-name">FREE</div>
+      <div class="plan-price">0 TL</div>
+      <div class="plan-period">Sonsuza kadar ucretsiz</div>
+      <ul class="features">
+        <li>Gunde 5 soru hakki</li>
+        <li>Temel AI cevaplari</li>
+        <li>Teknoloji ve AI sorulari</li>
+        <li class="no">Limitsiz soru</li>
+        <li class="no">Oncelikli yanit</li>
+        <li class="no">Gelismis ozellikler</li>
+      </ul>
+      <button class="btn-plan free" onclick="window.location.href='index.html'">MEVCUT PLAN</button>
+    </div>
+    <div class="plan-card pro">
+      <div class="plan-name">PRO</div>
+      <div class="plan-price">99 TL</div>
+      <div class="plan-period">/ aylik</div>
+      <ul class="features">
+        <li>Limitsiz soru</li>
+        <li>Gelismis AI cevaplari</li>
+        <li>Teknoloji ve AI sorulari</li>
+        <li>Oncelikli yanit hizi</li>
+        <li>Sohbet gecmisi</li>
+        <li>Pro rozeti</li>
+      </ul>
+      <button class="btn-plan pro-btn" onclick="upgradeToPro()">PRO'YA GEC</button>
+    </div>
+  </div>
+  <div class="stripe-note">Guvenli odeme - Stripe tarafindan islenir</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/app.js"></script>
+<script>
+  async function upgradeToPro() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { window.location.href = 'login.html'; return; }
+    alert('Stripe entegrasyonu yakinda eklenecek!');
+  }
+</script>
+</body>
+</html>
