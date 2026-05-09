@@ -6,11 +6,18 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { messages } = req.body;
+  const { messages, plan } = req.body;
   if (!messages) return res.status(400).json({ error: 'messages gerekli' });
 
   const GROQ_API_KEY = process.env.GROQ_API_KEY;
   if (!GROQ_API_KEY) return res.status(500).json({ error: 'API key eksik' });
+
+  const isPro = plan === 'pro';
+  const model = isPro ? 'llama-3.3-70b-versatile' : 'llama-3.1-8b-instant';
+  const maxTokens = isPro ? 2048 : 512;
+  const systemPrompt = isPro
+    ? "Sen ProtoX'sin. Protocol X yapimcilari tarafindan gelistirildim. Teknoloji, yazilim ve siber guvenlik konularinda uzman bir AI asistansin. YouTube kanalimiz: https://www.youtube.com/@ProtocollX - Pro kullanici icin detayli, kapsamli ve gelismis cevaplar ver. Turkce cevap ver."
+    : "Sen ProtoX'sin. Protocol X yapimcilari tarafindan gelistirildim. Teknoloji, yazilim ve siber guvenlik konularinda uzman bir AI asistansin. YouTube kanalimiz: https://www.youtube.com/@ProtocollX - Turkce cevap ver. Kisa ve net ol.";
 
   const groqMessages = messages.map(m => ({
     role: m.role === 'model' ? 'assistant' : 'user',
@@ -25,13 +32,13 @@ module.exports = async function handler(req, res) {
         'Authorization': 'Bearer ' + GROQ_API_KEY
       },
       body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
+        model: model,
         messages: [
-          { role: 'system', content: "Sen ProtoX'sin. Protocol X yapimcilari tarafindan gelistirildim. Teknoloji, yazilim ve siber guvenlik konularinda uzman bir AI asistansin. YouTube kanalimiz: https://www.youtube.com/@ProtocollX - Teknoloji ve siber guvenlik icerikleri paylasilıyor. Turkce cevap ver. Kisa, net ve anlasılır ol." },
+          { role: 'system', content: systemPrompt },
           ...groqMessages
         ],
-        max_tokens: 1024,
-        temperature: 0.7
+        max_tokens: maxTokens,
+        temperature: isPro ? 0.8 : 0.7
       })
     });
 
