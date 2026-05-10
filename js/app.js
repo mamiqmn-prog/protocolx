@@ -85,7 +85,7 @@ async function sendMessage() {
     removeTyping(typingId);
     addMessage('ai', reply);
     messages.push({ role: 'model', parts: [{ text: reply }] });
-    if (userPlan === 'free') {
+    if (userPlan === 'free' && currentUser) {
       todayCount++;
       await supabaseClient.from('profiles')
         .update({ daily_count: todayCount }).eq('id', currentUser.id);
@@ -94,7 +94,7 @@ async function sendMessage() {
     }
   } catch (err) {
     removeTyping(typingId);
-    addMessage('ai', 'Hata: ' + err.message);
+    addMessage('ai', 'Bir hata olustu. Lutfen tekrar dene.');
   }
   document.getElementById('sendBtn').disabled = false;
 }
@@ -105,9 +105,9 @@ async function callGroq(msgs) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ messages: msgs, plan: userPlan })
   });
+  if (!response.ok) throw new Error('API hatasi');
   const data = await response.json();
-  if (!response.ok) throw new Error(data.error || 'API hatasi');
-  if (!data.reply) throw new Error('Bos cevap: ' + JSON.stringify(data));
+  if (!data.reply) throw new Error('Bos cevap');
   return data.reply;
 }
 
