@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ProtoX — Bize Ulaşın</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a0f;
+      color: #e2e8f0;
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      border-bottom: 1px solid #1e1e2e;
+    }
+    .logo { font-size: 1.5rem; font-weight: 800; }
+    .logo .proto { color: #e2e8f0; }
+    .logo .x { color: #ff3c3c; }
+    nav a { color: #94a3b8; text-decoration: none; margin-left: 20px; font-size: 0.9rem; }
+    nav a:hover { color: #fff; }
+    .container {
+      max-width: 600px;
+      margin: 60px auto;
+      padding: 0 24px;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle {
+      color: #64748b;
+      margin-bottom: 40px;
+      font-size: 0.95rem;
+    }
+    .form-group { margin-bottom: 20px; }
+    label { display: block; font-size: 0.85rem; color: #94a3b8; margin-bottom: 8px; }
+    input, select, textarea {
+      width: 100%;
+      background: #12121a;
+      border: 1px solid #1e1e2e;
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: #e2e8f0;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #ff3c3c;
+    }
+    textarea { resize: vertical; min-height: 130px; }
+    select option { background: #12121a; }
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: #ff3c3c;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: #e02020; }
+    .btn:disabled { background: #444; cursor: not-allowed; }
+    .msg {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      display: none;
+    }
+    .msg.success { background: #0f2a1a; color: #4ade80; border: 1px solid #166534; }
+    .msg.error { background: #2a0f0f; color: #f87171; border: 1px solid #7f1d1d; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><span class="proto">PROTO</span><span class="x">X</span></div>
+  <div>
+    <a href="index.html">Ana Sayfa</a>
+    <a href="pricing.html">Fiyatlar</a>
+    <a href="contact.html">İletişim</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Bize Ulaşın</h1>
+  <p class="subtitle">Sorularınız, önerileriniz veya teknik destek için buradayız.</p>
+
+  <div class="form-group">
+    <label>Adınız</label>
+    <input type="text" id="name" placeholder="Adınızı girin" />
+  </div>
+
+  <div class="form-group">
+    <label>E-posta</label>
+    <input type="email" id="email" placeholder="ornek@mail.com" />
+  </div>
+
+  <div class="form-group">
+    <label>Kategori</label>
+    <select id="category">
+      <option value="">Seçiniz...</option>
+      <option value="Teknik Sorun">Teknik Sorun</option>
+      <option value="Öneri">Öneri</option>
+      <option value="Şikayet">Şikayet</option>
+      <option value="Diğer">Diğer</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Mesajınız</label>
+    <textarea id="message" placeholder="Mesajınızı yazın..."></textarea>
+  </div>
+
+  <button class="btn" id="sendBtn" onclick="sendMessage()">Gönder</button>
+  <div class="msg" id="msg"></div>
+</div>
+
+<script>
+  const SUPABASE_URL = 'https://thdozyoqygxanqmssbcr.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_Qbdxo_rfaSWxr2hjpNl7gg_ohH4LZts';
+
+  async function sendMessage() {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const category = document.getElementById('category').value;
+    const message = document.getElementById('message').value.trim();
+    const btn = document.getElementById('sendBtn');
+    const msg = document.getElementById('msg');
+
+    if (!name || !email || !category || !message) {
+      showMsg('Lütfen tüm alanları doldurun.', 'error');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Gönderiliyor...';
+
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/support_messages`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`
+      },
+      body: JSON.stringify({ name, email, category, message, status: 'new' })
+    });
+
+    if (res.ok || res.status === 201) {
+      showMsg('Mesajınız iletildi! En kısa sürede dönüş yapacağız.', 'success');
+      document.getElementById('name').value = '';
+      document.getElementById('email').value = '';
+      document.getElementById('category').value = '';
+      document.getElementById('message').value = '';
+    } else {
+      showMsg('Bir hata oluştu, lütfen tekrar deneyin.', 'error');
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Gönder';
+  }
+
+  function showMsg(text, type) {
+    const msg = document.getElementById('msg');
+    msg.textContent = text;
+    msg.className = 'msg ' + type;
+    msg.style.display = 'block';
+  }
+</script>
+
+</body>
+    </html>
