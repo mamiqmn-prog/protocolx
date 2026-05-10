@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ProtocolX — AI Asistan</title>
+<title>ProtoX — AI Asistan</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -127,14 +127,12 @@
   .welcome-icon {
     width: 80px;
     height: 80px;
-    border: 2px solid var(--accent);
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
+    overflow: hidden;
+    border: 2px solid var(--accent);
     animation: pulse 2s infinite;
   }
+  .welcome-icon img { width: 100%; height: 100%; object-fit: cover; }
   @keyframes pulse {
     0%,100% { box-shadow: 0 0 0 0 rgba(0,212,255,0.3); }
     50% { box-shadow: 0 0 20px 4px rgba(0,212,255,0.1); }
@@ -289,9 +287,9 @@
 </head>
 <body>
 <header>
-  <a href="index.html" class="logo">PROTOCOL<span>X</span></a>
+  <a href="index.html" class="logo">PROTO<span>X</span></a>
   <div class="header-right">
-    <span class="limit-counter" id="limitDisplay"><span id="usedCount">0</span>/5</span>
+    <span class="limit-counter" id="limitDisplay"><span id="usedCount">0</span>/10</span>
     <span class="plan-badge free" id="planBadge">FREE</span>
     <a href="pricing.html" class="btn-upgrade" id="upgradeBtn">UPGRADE</a>
     <button class="btn-logout" onclick="logout()">Cikis</button>
@@ -299,13 +297,15 @@
 </header>
 <div class="chat-container" id="chatContainer">
   <div class="welcome" id="welcomeScreen">
-    <div class="welcome-icon">🤖</div>
-    <h2>PROTOCOLX</h2>
-    <p>Teknoloji ve yapay zeka hakkinda her seyi sorabilecegin asistanin.</p>
+    <div class="welcome-icon">
+      <img src="logo.png" alt="ProtoX" onerror="this.parentElement.innerHTML='🤖'">
+    </div>
+    <h2>PROTOX</h2>
+    <p>Teknoloji, yazilim ve siber guvenlik hakkinda her seyi sorabilecegin asistanin.</p>
     <div class="suggestions">
       <div class="suggestion-chip" onclick="sendSuggestion('Yapay zeka nedir?')">Yapay zeka nedir?</div>
       <div class="suggestion-chip" onclick="sendSuggestion('Python nasil ogrenirim?')">Python nasil ogrenirim?</div>
-      <div class="suggestion-chip" onclick="sendSuggestion('ChatGPT ile Gemini farki nedir?')">ChatGPT vs Gemini</div>
+      <div class="suggestion-chip" onclick="sendSuggestion('Siber guvenlik nedir?')">Siber guvenlik nedir?</div>
       <div class="suggestion-chip" onclick="sendSuggestion('Web sitesi nasil yapilir?')">Web sitesi nasil yapilir?</div>
     </div>
   </div>
@@ -315,14 +315,14 @@
     Gunluk ucretsiz limitine ulastin! <a href="pricing.html">Pro'ya gec</a>
   </div>
   <div class="input-wrapper">
-    <textarea id="messageInput" placeholder="ProtocolX'e bir sey sor..." rows="1"></textarea>
+    <textarea id="messageInput" placeholder="ProtoX'e bir sey sor..." rows="1"></textarea>
     <button id="sendBtn" onclick="sendMessage()">
       <svg viewBox="0 0 24 24"><path d="M2 21L23 12 2 3v7l15 2-15 2v7z"/></svg>
     </button>
   </div>
-  <div class="input-footer">ProtocolX yapay zeka hata yapabilir.</div>
+  <div class="input-footer">ProtoX yapay zeka hata yapabilir.</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/app.js"></script>
 </body>
-  </html>
+</html>
