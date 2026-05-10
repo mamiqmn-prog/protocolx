@@ -27,7 +27,11 @@ async function checkAuth() {
 
 async function logout() {
   await supabaseClient.auth.signOut();
-  window.location.href = 'login.html';
+
+  localStorage.clear();
+  sessionStorage.clear();
+
+  window.location.replace('/login.html');
 }
 
 async function loadUserState(user) {
