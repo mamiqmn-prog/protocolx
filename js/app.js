@@ -1,5 +1,5 @@
 const SUPABASE_URL = 'https://thdozyoqygxanqmssbcr.supabase.co';
-const SUPABASE_ANON_KEY ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRoZG96eW9xeWd4YW5xbXNzYmNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMjMzNDYsImV4cCI6MjA5Mzg5OTM0Nn0.Fq7DBc3bLAlgNi-b2doKMKzaiqyjROgQSYsHyZRxMis';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRoZG96eW9xeWd4YW5xbXNzYmNyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMjMzNDYsImV4cCI6MjA5Mzg5OTM0Nn0.Fq7DBc3bLAlgNi-b2doKMKzaiqyjROgQSYsHyZRxMis';
 
 const { createClient } = supabase;
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -94,7 +94,7 @@ async function sendMessage() {
     }
   } catch (err) {
     removeTyping(typingId);
-    addMessage('ai', 'Bir hata olustu. Lutfen tekrar dene.');
+    addMessage('ai', 'Hata: ' + err.message);
   }
   document.getElementById('sendBtn').disabled = false;
 }
@@ -105,8 +105,9 @@ async function callGroq(msgs) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ messages: msgs, plan: userPlan })
   });
-  if (!response.ok) throw new Error('API hatasi');
   const data = await response.json();
+  if (!response.ok) throw new Error(data.error || 'API hatasi');
+  if (!data.reply) throw new Error('Bos cevap: ' + JSON.stringify(data));
   return data.reply;
 }
 
