@@ -104,6 +104,16 @@
     padding: 5px 10px;
     cursor: pointer;
   }
+  .btn-contact {
+    font-size: 0.75rem;
+    color: var(--muted);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 5px 10px;
+    text-decoration: none;
+  }
+  .btn-contact:hover { color: var(--accent); border-color: var(--accent); }
   .chat-container {
     position: relative;
     z-index: 1;
@@ -292,7 +302,8 @@
     <span class="limit-counter" id="limitDisplay"><span id="usedCount">0</span>/10</span>
     <span class="plan-badge free" id="planBadge">FREE</span>
     <a href="pricing.html" class="btn-upgrade" id="upgradeBtn">UPGRADE</a>
-    <button class="btn-logout" onclick="logout()">Cikis</button>
+    <a href="contact.html" class="btn-contact">İletişim</a>
+    <button class="btn-logout" onclick="logout()">Çıkış</button>
   </div>
 </header>
 <div class="chat-container" id="chatContainer">
@@ -301,21 +312,21 @@
       <img src="Black Navy Futuristic Modern Cybersecurity Presentation (1).jpg" alt="ProtoX" onerror="this.parentElement.innerHTML='🤖'">
     </div>
     <h2>PROTOX</h2>
-    <p>Teknoloji, yazilim ve siber guvenlik hakkinda her seyi sorabilecegin asistanin.</p>
+    <p>Teknoloji, yazılım ve siber güvenlik hakkında her şeyi sorabileceğin asistanın.</p>
     <div class="suggestions">
       <div class="suggestion-chip" onclick="sendSuggestion('Yapay zeka nedir?')">Yapay zeka nedir?</div>
-      <div class="suggestion-chip" onclick="sendSuggestion('Python nasil ogrenirim?')">Python nasil ogrenirim?</div>
-      <div class="suggestion-chip" onclick="sendSuggestion('Siber guvenlik nedir?')">Siber guvenlik nedir?</div>
-      <div class="suggestion-chip" onclick="sendSuggestion('Web sitesi nasil yapilir?')">Web sitesi nasil yapilir?</div>
+      <div class="suggestion-chip" onclick="sendSuggestion('Python nasıl öğrenirim?')">Python nasıl öğrenirim?</div>
+      <div class="suggestion-chip" onclick="sendSuggestion('Siber güvenlik nedir?')">Siber güvenlik nedir?</div>
+      <div class="suggestion-chip" onclick="sendSuggestion('Web sitesi nasıl yapılır?')">Web sitesi nasıl yapılır?</div>
     </div>
   </div>
 </div>
 <div class="input-area">
   <div class="limit-warning" id="limitWarning">
-    Gunluk ucretsiz limitine ulastin! <a href="pricing.html">Pro'ya gec</a>
+    Günlük ücretsiz limitine ulaştın! <a href="pricing.html">Pro'ya geç</a>
   </div>
   <div class="input-wrapper">
-    <textarea id="messageInput" placeholder="ProtoX'e bir sey sor..." rows="1"></textarea>
+    <textarea id="messageInput" placeholder="ProtoX'e bir şey sor..." rows="1"></textarea>
     <button id="sendBtn" onclick="sendMessage()">
       <svg viewBox="0 0 24 24"><path d="M2 21L23 12 2 3v7l15 2-15 2v7z"/></svg>
     </button>
@@ -325,4 +336,4 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/app.js"></script>
 </body>
-</html>
+  </html>
